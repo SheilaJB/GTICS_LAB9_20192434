@@ -27,4 +27,13 @@ public class CoctelDao {
         return response.getBody().getDrinks().stream().limit(12).collect(Collectors.toList());
 
     }
+
+    //Obtener detalle de un coctel
+    public Coctel buscarCoctel(String id) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<CoctelResponse> response = restTemplate.getForEntity(
+                "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + id, CoctelResponse.class
+        );
+        return response.getBody().getDrinks().get(0);
+    }
 }

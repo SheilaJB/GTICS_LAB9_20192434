@@ -26,7 +26,7 @@
             </div>
             <div class="col-md-4 mb-4" th:if="${cocteles != null}" th:each="coctel : ${cocteles}">
                 <div class="card h-100" >
-                    <a th:href="@{/coctel/detail}">
+                    <a th:href="@{'/coctel/detail/' + ${coctel.idDrink}} ">
                         <img th:src="${coctel.strDrinkThumb}" class="card-img-top" alt="Imagen del coctel">
                     </a>
                     <div class="card-body text-center">
