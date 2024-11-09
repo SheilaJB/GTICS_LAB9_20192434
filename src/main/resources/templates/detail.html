@@ -5,6 +5,11 @@
     <title>Detalles</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <head>
+        <!-- Enlace a Font Awesome desde el CDN -->
+        <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}" rel="stylesheet">
+    </head>
+
 </head>
 <body>
 <!--NavBar -->
@@ -18,6 +23,8 @@
     <div class="text-center">
         <!-- Título del cóctel -->
         <h1 class="mt-2" th:text="${coctel.strDrink}">Nombre del Cóctel</h1>
+        <!-- Botón de favoritos -->
+        <button id="favorite-button" class="btn btn-outline-warning mt-2" onclick="addToFavorites()" data-idDrink="${coctel.idDrink}"> <i class="fa fa-star"></i> Add to favorites </button>
         <!-- Imagen del cóctel -->
         <div class="mt-4">
             <img th:src="${coctel.strDrinkThumb}" alt="Imagen del cóctel" class="img-fluid rounded" style="width: 50%; max-width: 200px;">
@@ -58,7 +65,43 @@
     </div>
 
 </div>
-
+<!-- Modal de guardado exitoso -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Guardado Exitoso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"> ¡La bebida ha sido añadida a tus favoritos! </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script>
+    function addToFavorites() {
+        const idDrink = document.getElementById('favorite-button').getAttribute('data-idDrink');
+
+        // Realiza la solicitud al servidor para guardar el cóctel en la base de datos
+        fetch(`/coctel/favorite/${idDrink}`, { method: 'POST' })
+            .then(response => {
+                if (response.ok) {
+                    // Muestra el modal de guardado exitoso
+                    $('#successModal').modal('show');
+
+                    // Cambia el icono del botón
+                    document.getElementById('favorite-button').innerHTML = '<i class="fas fa-check"></i>';
+                } else {
+                    alert('Hubo un error al añadir a favoritos.');
+                }
+            });
+    }
+</script>
+
 </body>
 </html>

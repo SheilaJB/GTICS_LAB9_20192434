@@ -2,6 +2,8 @@ package org.example.lab09_20192434.Dao;
 
 import org.example.lab09_20192434.Entity.Coctel;
 import org.example.lab09_20192434.Entity.CoctelResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -36,4 +38,13 @@ public class CoctelDao {
         );
         return response.getBody().getDrinks().get(0);
     }
+
+    //Guardar coctel
+    /*public  void favoriteCoctel(Coctel coctel) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+    }*/
+
+
 }
